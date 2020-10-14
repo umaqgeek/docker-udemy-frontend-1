@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db-umar:
+    container_name: db-umar
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=P@ssw0rd
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=P@ssw0rd
+      - MYSQL_DATABASE=react_docker_db
+    ports:
+      - 3307:3306
+    volumes:
+      - db-umar:/var/lib/mysql
+  react-umar:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: umar/react:latest
+    volumes:
+      - .:/reactproject
+    ports:
+      - "5001:3000"
+volumes:
+  db-umar:
+    external: true
